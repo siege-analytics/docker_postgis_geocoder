@@ -1,0 +1,36 @@
+FROM ubuntu:latest
+
+ENV DEBIAN_FRONTEND noninteractive
+
+# Install the basics
+RUN apt-get clean && apt-get update \
+    && apt-get install -y python3-pip gdal-bin python3-pyproj \
+    build-essential wget ca-certificates postgresql postgresql-contrib \
+    postgis
+
+
+
+# Install PIP requirements
+COPY requirements.txt /tmp/
+COPY python_entrypoint.sh /usr/local/bin/
+
+RUN pip3 install -r /tmp/requirements.txt
+RUN chmod +x /usr/local/bin/python_entrypoint.sh
+
+# Set up our run environment
+
+RUN mkdir -p /opt/code
+COPY python /opt/code/python
+COPY sql /opt/code/sql
+
+WORKDIR /opt/code
+
+# place for the shapefiles to come
+
+RUN mkdir -p /tmp/gisdata
+
+# start environment
+
+ENTRYPOINT python_entrypoint.sh
+CMD python3 --version
+

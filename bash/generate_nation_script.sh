@@ -1,0 +1,1 @@
+psql -c "SELECT Loader_Generate_Nation_Script('debbie')" -d geocoder -tA > /tmp/gisdata/nation_script_load.sh

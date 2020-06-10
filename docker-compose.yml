@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  postgis:
+    image: kartoza/postgis:12.1
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASS=postgrespassword
+      - POSTGRES_DBNAME=postgres
+      - POSTGRES_MULTIPLE_EXTENSIONS=postgis,hstore,postgis_topology,postgis_raster,pgrouting, fuzzystrmatch, address_standardizer, postgis_tiger_geocoder
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data:/data
+  python:
+    build:
+      context: .
+      dockerfile: Python_Dockerfile
+    environment:
+      - POSTGRES_HOST=postgis
+      - POSTGRES_DBNAME=postgres
+      - POSTGRES_PASSWORD=postgrespassword
+      - POSTGRES_USER=postgres
+      - PGHOST=postgis
+      - PGUSER=postgres
+      - PGPASSWORD=postgrespassword
+      - PGPORT=5432
+      - PGDATABASE=postgres
+
+
+
+
