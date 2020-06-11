@@ -30,6 +30,10 @@ UPDATE tiger.loader_variables AS tlv
 SET staging_fold = '/tmp/gisdata';
 
 SELECT * FROM tiger.loader_variables;
--- Update loading profile to use ZIPS
+
+-- Update loading profile to use ZIPS and other things that we need
 
 UPDATE tiger.loader_lookuptables SET load = true WHERE table_name = 'zcta510';
+UPDATE tiger.loader_lookuptables SET load = true WHERE load = false AND lookup_name IN ('tract', 'bg', 'tabblock');
+
+
