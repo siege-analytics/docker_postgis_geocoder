@@ -19,9 +19,12 @@ RUN chmod +x /usr/local/bin/python_entrypoint.sh
 
 # Set up our run environment
 
-RUN mkdir -p /opt/code
-COPY python /opt/code/python
-COPY sql /opt/code/sql
+COPY code /opt/code
+
+#RUN mkdir -p /opt/code
+RUN chmod -R +x /opt/code
+#COPY python /opt/code/python
+#COPY sql /opt/code/sql
 
 WORKDIR /opt/code
 
